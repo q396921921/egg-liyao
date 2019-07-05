@@ -7,6 +7,9 @@
   },
   "extends": "eslint-config-egg",
   "rules": {
-    
+    "no-useless-constructor":"off",
+    "no-bitwise":"off",
+    "jsdoc/check-tag-names":"off",
+    "jsdoc/require-param-description": "off"
   }
 }

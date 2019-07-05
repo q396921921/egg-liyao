@@ -17,7 +17,7 @@ module.exports = appInfo => {
       enable: false,
       ignoreJSON: true, // 默认为 false，当设置为 true 时，将会放过所有 content-type 为 `application/json` 的请求
     },
-    domainWhiteList: ['*'],
+    domainWhiteList: [ '*' ],
   };
   config.cors = {
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
@@ -27,8 +27,8 @@ module.exports = appInfo => {
     poolSize: 20,
     options: {
       auth: { authSource: 'liyao' },
-      user: 'root',
-      pass: 'rootliyao',
+      user: 'liyao',
+      pass: 'liyao',
       useCreateIndex: true,
       useNewUrlParser: true,
     },
@@ -54,6 +54,7 @@ module.exports = appInfo => {
   exports.jwt = {
     enable: false,
     secret: 'martinmadeliyao',
+    expiresIn: 60,
   };
   exports.logger = {
     outputJSON: true,

@@ -28,7 +28,7 @@
   "scripts": {
     "test": "npm run lint -- --fix && egg-bin pkgfiles && npm run test-local",
     "test-local": "egg-bin test",
-    "debug": "egg-bin debug --port 2332",
+    "debug": "egg-bin debug --port 3333",
     "cov": "egg-bin cov",
     "lint": "eslint .",
     "ci": "npm run lint && egg-bin pkgfiles --check && npm run cov",
