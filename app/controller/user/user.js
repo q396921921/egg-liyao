@@ -29,9 +29,9 @@ class UserController extends Controller {
   }
   // get传递电话，查询对应人的详细信息
   async show() {
-    const { ctx } = this;
+    const { ctx, service } = this;
     const phone = ctx.params.id;
-    const res = await ctx.model.User.findOne({ phone });
+    const res = await service.user.user.show({ phone });
     ctx.helper.success(ctx, res);
   }
 }

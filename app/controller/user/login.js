@@ -9,8 +9,8 @@ class LoginController extends Controller {
   async login() {
     const { ctx, service } = this;
     ctx.validate(rule.login);
-    const params = ctx.request.body;
-    const res = await service.user.login.login(params);
+    const payload = ctx.request.body;
+    const res = await service.user.login.login(payload);
     ctx.helper.success(ctx, res);
   }
 }

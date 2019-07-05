@@ -3,10 +3,10 @@
 const Service = require('egg').Service;
 
 class LoginService extends Service {
-  async login(params) {
+  async login(payload) {
     const { ctx } = this;
-    const phone = params.phone;
-    const password = await this.md5cryp(params.password);
+    const phone = payload.phone;
+    const password = await this.md5cryp(payload.password);
     const result = await ctx.model.User.findOne({ phone });
 
     if (result === null || password !== result.password) {
