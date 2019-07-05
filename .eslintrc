@@ -10,6 +10,7 @@
     "no-useless-constructor":"off",
     "no-bitwise":"off",
     "jsdoc/check-tag-names":"off",
-    "jsdoc/require-param-description": "off"
+    "jsdoc/require-param-description": "off",
+    "jsdoc/check-param-names": "off"
   }
 }
