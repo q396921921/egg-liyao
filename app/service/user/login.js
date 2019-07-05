@@ -7,11 +7,17 @@ class LoginService extends Service {
     const { ctx } = this;
     const phone = params.phone;
     const password = await this.md5cryp(params.password);
-    const result = await this.find(phone);
+    const result = await ctx.model.User.findOne({ phone });
 
     if (result === null || password !== result.password) {
       ctx.throw(403, '用户名或密码错误');
     }
+    const res = {
+      _id: result._id,
+      phone: result.phone,
+      token: await this.createToken(phone),
+    };
+    return res;
   }
   // 通过传过来的数据创建一个token
   async createToken(_id) {

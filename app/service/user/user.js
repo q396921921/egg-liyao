@@ -12,14 +12,15 @@ class UserService extends Service {
    * @returns res
    * @memberof UserService
    */
-  async create(phone, password) {
+  async create(payload) {
     const { ctx } = this;
-    const user = await ctx.model.User.findOne({ phone }, { _id: 1 });
+    const obj = ctx.helper.for({}, payload);
+    const user = await ctx.model.User.findOne({ phone: payload.phone }, { _id: 1 });
     if (user) {
-      return this.ctx.throw(403, '手机号码重复');
+      return ctx.throw(403, '手机号码重复');
     }
-    password = await this.md5cryp(password);
-    const res = await ctx.model.User.create({ phone, password });
+    obj.password = await this.md5cryp(obj.password);
+    const res = await ctx.model.User.create(obj);
     return res;
   }
   /**
@@ -38,13 +39,21 @@ class UserService extends Service {
    *
    * @param {String} _id 主键Id
    * @param {String} phone 手机号
-   * @param {String} password 密码
    * @returns res
    * @memberof UserService
    */
-  async update(_id, phone, password) {
+  async update(_id, payload) {
     const { ctx } = this;
-    const res = await ctx.model.User.updateOne({ _id }, { phone, password });
+    const user1 = await ctx.model.User.findOne({ _id }); // 当前用户对应的人员
+    const user2 = await ctx.model.User.findOne({ phone: payload.phone }); // 新手机号对应的人员
+    if (user2 && user1._id.toString() !== user2._id.toString()) {
+      return ctx.throw(403, '手机号码已存在');
+    }
+    const obj = ctx.helper.for({}, payload);
+    if (obj.hasOwnProperty('password')) {
+      obj.password = await this.md5cryp(obj.password);
+    }
+    const res = await ctx.model.User.updateOne({ _id }, obj);
     return res;
   }
   /**
@@ -58,6 +67,13 @@ class UserService extends Service {
     const { ctx } = this;
     const res = await ctx.model.User.findOne({ phone });
     return res;
+  }
+  // 对密码进行加密
+  async md5cryp(content) {
+    const crypto = require('crypto');
+    const md5 = crypto.createHash('md5');
+    md5.update(content);
+    return md5.digest('hex');
   }
 }
 module.exports = UserService;
