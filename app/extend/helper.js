@@ -17,3 +17,16 @@ exports.error = (ctx, code, data) => {
   ctx.body = { code, ts, msg, data };
   ctx.status = code;
 };
+
+/**
+ * 传入要被修改的对象，以及载荷，返回修改后的数据
+ */
+exports.for = (obj, payload) => {
+  for (const key in payload) {
+    if (payload.hasOwnProperty(key)) {
+      const val = payload[key];
+      obj[key] = val;
+    }
+  }
+  return obj;
+};
