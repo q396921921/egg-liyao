@@ -2,16 +2,12 @@
 
 module.exports = app => {
   const mongoose = app.mongoose;
-  const UserSchema = new mongoose.Scema({
-    username: {
+  const UserSchema = new mongoose.Schema({
+    phone: {
       type: String,
       default: '',
     },
     password: {
-      type: String,
-      default: '',
-    },
-    phone: {
       type: String,
       default: '',
     },

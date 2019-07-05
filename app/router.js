@@ -1,4 +1,5 @@
-'use strict'
+'use strict';
 module.exports = app => {
-  require('./router')(app);
-}
+  require('./router/user/user')(app);
+  require('./router/user/login')(app);
+};
