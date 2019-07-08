@@ -34,9 +34,10 @@ class UserController extends Controller {
     const res = await service.user.user.show(phone);
     ctx.helper.success(ctx, res);
   }
-  async text() {
+  async text123() {
     const { ctx } = this;
-    ctx.helper.success(ctx, { a: 123 });
+    console.log(123);
+    ctx.helper.success(ctx, { b: 456 });
   }
 }
 module.exports = UserController;
