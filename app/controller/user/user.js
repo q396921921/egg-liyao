@@ -36,8 +36,7 @@ class UserController extends Controller {
   }
   async text123() {
     const { ctx } = this;
-    console.log(123);
-    ctx.helper.success(ctx, { b: 456 });
+    await ctx.render('a.ejs', {});
   }
 }
 module.exports = UserController;

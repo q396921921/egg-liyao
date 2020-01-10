@@ -1,5 +1,5 @@
 'use strict';
-
+const path = require('path');
 module.exports = appInfo => {
   const config = {};
 
@@ -23,16 +23,38 @@ module.exports = appInfo => {
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
   };
   config.mongoose = {
-    url: 'mongodb://47.95.226.238:27017/liyao',
+    url: 'mongodb://47.95.226.238:27017/test',
     poolSize: 20,
     options: {
-      auth: { authSource: 'liyao' },
-      user: 'liyao',
-      pass: 'liyao',
+      auth: { authSource: 'test' },
+      user: 'test',
+      pass: 'test',
       useCreateIndex: true,
       useNewUrlParser: true,
     },
   };
+  // config.amqplib = {
+  //   client: {
+  //     // url: 'amqp://localhost',
+  //     connectOptions: {
+  //       protocol: 'amqp',
+  //       hostname: 'localhost',
+  //       port: 15672,
+  //       username: 'guest',
+  //       password: 'guest',
+  //       locale: 'en_US',
+  //       frameMax: 0,
+  //       heartbeat: 0,
+  //       vhost: '/',
+  //     },
+  //     // socketOptions: {
+  //     //   cert: certificateAsBuffer, // client cert
+  //     //   key: privateKeyAsBuffer, // client key
+  //     //   passphrase: 'MySecretPassword', // passphrase for key
+  //     //   ca: [caCertAsBuffer], // array of trusted CA certs
+  //     // },
+  //   },
+  // };
   config.cluster = {
     listen: {
       port: 3333,
@@ -51,12 +73,21 @@ module.exports = appInfo => {
       ctx.status = 509;
     },
   };
-  exports.jwt = {
-    enable: false,
-    secret: 'martinmadeliyao',
-    expiresIn: 60,
+  // 静态文件夹，可以通过ip:port/public/实际路径名得到资源
+  config.static = {
+    prefix: '/public/',
+    dir: path.join(appInfo.baseDir, 'app/public'),
   };
-  exports.logger = {
+  // 渲染模版，设置根路径
+  config.view = {
+    mapping: {
+      '.ejs': 'ejs',
+    },
+  };
+  config.jwt = {
+    secret: 'martinmadeliyao',
+  };
+  config.logger = {
     outputJSON: true,
   };
   return config;

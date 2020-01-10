@@ -4,11 +4,15 @@
   "description": "data statistics",
   "dependencies": {
     "egg": "^2.3.0",
+    "egg-amqplib": "^2.0.4",
     "egg-cors": "^2.2.0",
     "egg-jwt": "^3.1.2",
     "egg-mongoose": "^3.1.0",
     "egg-scripts": "^2.11.0",
+    "egg-static": "^2.2.0",
     "egg-validate": "^2.0.1",
+    "egg-view": "^2.1.2",
+    "egg-view-ejs": "^2.0.0",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.11",
     "moment": "^2.22.2"
@@ -27,15 +31,30 @@
     "node": ">=8.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start",
-    "test": "npm run lint -- --fix && egg-bin pkgfiles && npm run test-local",
+    "start": "egg-scripts start --daemon --port 2332 --ignore-stderr --title=master",
+    "docker": "egg-scripts start --port 2332 --ignore-stderr",
+    "stop": "egg-scripts stop --title=master",
+    "dev": "egg-bin dev --port 8089",
+    "debug": "egg-bin debug --port 2332",
+    "test": "egg-scripts start --env=test --port 3000 --workers=6 --title=test --ignore-stderr",
+    "jsy": "egg-scripts start --ignore-stderr --env=jsy --daemon --port 2334 --workers=6 --title=jsy",
+    "jsy-stop": "egg-scripts stop --title=jsy",
+    "jsytest": "egg-scripts start --ignore-stderr --env=jsytest --daemon --port 2334 --workers=6 --title=jsytest",
+    "jsytest-stop": "egg-scripts stop --title=jsytest",
+    "test_master": "egg-scripts start --ignore-stderr --env=tmaster --daemon --port 2336 --workers=6 --title=tmaster",
+    "test_master-stop": "egg-scripts stop --title=tmaster",
+    "stoptmaster": "egg-scripts stop --title=tmaster",
+    "test_server": "npm run test-stop && EGG_SERVER_ENV=test npm run test",
+    "test-stop": "egg-scripts stop --title=test",
+    "stoptest": "egg-scripts stop --title=test",
+    "jsy_server": "npm stop --title=jsy && EGG_SERVER_ENV=test npm run test",
     "test-local": "egg-bin test",
-    "debug": "egg-bin debug --port 3333",
     "cov": "egg-bin cov",
     "lint": "eslint .",
-    "ci": "npm run lint && egg-bin pkgfiles --check && npm run cov",
+    "ci": "npm run lint && npm run cov",
     "autod": "autod",
-    "pkgfiles": "egg-bin pkgfiles"
+    "artisan": "egg-artisan",
+    "build": "pkg . --targets node8-linux-x64 --out-path ./  --debug"
   },
   "ci": {
     "version": "8, 9"

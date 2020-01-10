@@ -30,4 +30,4 @@ COPY . /root/duzhuo/project/eggliyao/egg-liyao
 EXPOSE 3333
 
 # 启动node应用
-CMD npm start
+CMD npm test
